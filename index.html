@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            color: #e0e0e0;
+            background: linear-gradient(135deg, #0f0f23, #1a1a2e, #16213e);
+            background-attachment: fixed;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        nav ul li {
+            margin-left: 2rem;
+        }
+        nav ul li a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+            transition: width 0.3s ease;
+        }
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://source.unsplash.com/featured/?cnc-machining,industrial') center/cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding-top: 80px;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255,107,107,0.1), rgba(78,205,196,0.1));
+            z-index: 1;
+        }
+        .hero > div {
+            position: relative;
+            z-index: 2;
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease infinite;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .btn {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        .btn:hover::before {
+            left: 100%;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+        }
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .about {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin: 2rem auto;
+            padding: 3rem;
+            color: #e0e0e0;
+        }
+        .about h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #4ecdc4;
+        }
+        .about-content {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        .about-text {
+            flex: 1;
+        }
+        .about-image {
+            flex: 1;
+            height: 300px;
+            background: url('https://source.unsplash.com/featured/?machine-shop,workshop') center/cover;
+            border-radius: 10px;
+        }
+        .products {
+            background: transparent;
+        }
+        .products h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #4ecdc4;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .product-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+        .product-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+        .product-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+        .product-content {
+            padding: 1.5rem;
+        }
+        .product-content h3 {
+            margin-bottom: 1rem;
+            color: #4ecdc4;
+        }
+        .materials {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .material {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #e0e0e0;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .contact {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #e0e0e0;
+            text-align: center;
+            margin: 2rem auto;
+            padding: 3rem;
+        }
+        .contact h2 {
+            margin-bottom: 2rem;
+            color: #4ecdc4;
+        }
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .contact-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .contact-item h3 {
+            margin-bottom: 0.5rem;
+        }
+        footer {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: #e0e0e0;
+            text-align: center;
+            padding: 2rem;
+        }
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .about-content {
+                flex-direction: column;
+            }
+            nav ul {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="LOGO.jpeg" alt="Global Tools Logo">
+                <span>Global Tools</span>
+            </div>
+            <ul>
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="hero" class="hero">
+        <div>
+            <img src="LOGO.jpeg" alt="Global Tools" style="height: 150px; width: auto; margin-bottom: 2rem; filter: drop-shadow(0 0 10px rgba(78, 205, 196, 0.5));">
+            <h1>Global Tools</h1>
+            <p>Precision CNC Tooling Solutions for Industrial Excellence</p>
+            <a href="#products" class="btn">Explore Our Products</a>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <h2>About Global Tools</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>Global Tools is a leading provider of high-quality cutting tools and precision CNC tooling solutions. With years of experience in the industry, we specialize in delivering top-tier products that meet the demands of modern manufacturing.</p>
+                <p><strong>Owner:</strong> Prakash Kambar</p>
+                <p><strong>Location:</strong> Bhosari, Pune</p>
+                <p>We offer a comprehensive range of tools including cutting tools, taps, thread mills, thread inserts, CNC inserts, and end mills in solid carbide, HSS, and brazed materials.</p>
+            </div>
+            <div class="about-image"></div>
+        </div>
+    </section>
+
+    <section id="products" class="products">
+        <h2>Our Product Categories</h2>
+        <div class="product-grid">
+            <div class="product-card">
+                <img src="CUTTING TOOLS.jpg" alt="Cutting Tools" class="product-image">
+                <div class="product-content">
+                    <h3>Cutting Tools</h3>
+                    <p>High-quality cutting tools designed for precision machining and various industrial applications.</p>
+                    <div class="materials">
+                        <span class="material">Solid Carbide</span>
+                        <span class="material">HSS</span>
+                        <span class="material">Brazed</span>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="TAPS.jpg" alt="Taps" class="product-image">
+                <div class="product-content">
+                    <h3>Taps</h3>
+                    <p>Precision taps for creating internal threads in metal workpieces, available in various sizes and types.</p>
+                    <div class="materials">
+                        <span class="material">Solid Carbide</span>
+                        <span class="material">HSS</span>
+                        <span class="material">Brazed</span>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="THREAD MILL.jpg" alt="Thread Mill" class="product-image">
+                <div class="product-content">
+                    <h3>Thread Mill</h3>
+                    <p>Thread mills for efficient and accurate thread cutting in CNC machining operations.</p>
+                    <div class="materials">
+                        <span class="material">Solid Carbide</span>
+                        <span class="material">HSS</span>
+                        <span class="material">Brazed</span>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="THREAD INSERT.jpg" alt="Thread Insert" class="product-image">
+                <div class="product-content">
+                    <h3>Thread Insert</h3>
+                    <p>Thread inserts for repairing or strengthening threaded holes in various materials.</p>
+                    <div class="materials">
+                        <span class="material">Solid Carbide</span>
+                        <span class="material">HSS</span>
+                        <span class="material">Brazed</span>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="INSERT FOR CNC.jpg" alt="CNC Inserts" class="product-image">
+                <div class="product-content">
+                    <h3>Inserts for CNC VMC HMC GPM & SPM</h3>
+                    <p>Specialized inserts compatible with CNC Vertical Machining Centers, Horizontal Machining Centers, Gantry Portal Mills, and Special Purpose Machines.</p>
+                    <div class="materials">
+                        <span class="material">Solid Carbide</span>
+                        <span class="material">HSS</span>
+                        <span class="material">Brazed</span>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="END MILL.jpg" alt="End Mills and Drills" class="product-image">
+                <div class="product-content">
+                    <h3>End Mill Drills & Form Cutters</h3>
+                    <p>End mills, drills, and form cutters for milling, drilling, and shaping operations in various machining processes.</p>
+                    <div class="materials">
+                        <span class="material">Solid Carbide</span>
+                        <span class="material">HSS</span>
+                        <span class="material">Brazed</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2>Contact Us</h2>
+        <div class="contact-info">
+            <div class="contact-item">
+                <h3>Phone</h3>
+                <p>8830016250</p>
+            </div>
+            <div class="contact-item">
+                <h3>Email</h3>
+                <p>globaltools1007@gmail.com</p>
+            </div>
+            <div class="contact-item">
+                <h3>Location</h3>
+                <p>Bhosari, Pune</p>
+            </div>
+        </div>
+        <a href="mailto:globaltools1007@gmail.com" class="btn">Get In Touch</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Global Tools. All rights reserved. | Precision Tooling for Industrial Excellence</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
