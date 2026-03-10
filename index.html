@@ -493,9 +493,9 @@
         }
 
         function updateProductList() {
-            let filtered = products.filter(p => p.category.toLowerCase().includes(searchInput.value.trim().toLowerCase()));
-            if (sortBy.value === 'name_asc') filtered.sort((a,b)=>a.category.localeCompare(b.category));
-            if (sortBy.value === 'name_desc') filtered.sort((a,b)=>b.category.localeCompare(a.category));
+            let filtered = products.filter(p => p.name.toLowerCase().includes(searchInput.value.trim().toLowerCase()));
+            if (sortBy.value === 'name_asc') filtered.sort((a,b)=>a.name.localeCompare(b.name));
+            if (sortBy.value === 'name_desc') filtered.sort((a,b)=>b.name.localeCompare(a.name));
             renderProducts(filtered);
         }
 
@@ -508,6 +508,7 @@
                 const data = await response.json();
                 if (response.ok && data.success) {
                     products = data.data.map(item => ({
+                        name: item.category,
                         category: item.category,
                         description: item.description || 'Premium tooling solution for industrial application.',
                         image: item.image
