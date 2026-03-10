@@ -11,12 +11,12 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname)));
 
-// Custom endpoint for images with spaces in filenames
+// Custom endpoint for images with spaces in filenames (images stored in /images folder)
 app.get('/images/:imageName', (req, res) => {
   const imageName = decodeURIComponent(req.params.imageName);
-  const imagePath = path.join(__dirname, imageName);
+  const imagePath = path.join(__dirname, 'images', imageName);
 
-  if (!imagePath.startsWith(path.join(__dirname, ''))) {
+  if (!imagePath.startsWith(path.join(__dirname, 'images'))) {
     return res.status(403).send('Forbidden');
   }
 
