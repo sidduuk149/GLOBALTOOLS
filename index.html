@@ -374,14 +374,6 @@
 
     <section id="products" class="products">
         <h2>Our Product Categories</h2>
-        <div class="product-selectors" style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-bottom: 1.5rem;">
-            <input id="productSearch" type="search" placeholder="Search categories..." style="padding: 12px 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.3); background: rgba(0,0,0,0.4); color: white; min-width: 240px;">
-            <select id="sortBy" style="padding: 12px 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.3); background: rgba(0,0,0,0.4); color: white; min-width: 240px;">
-                <option value="default">Sort by: Default</option>
-                <option value="name_asc">Name A-Z</option>
-                <option value="name_desc">Name Z-A</option>
-            </select>
-        </div>
         <div id="productGrid" class="product-grid"></div>
     </section>
 
@@ -464,8 +456,6 @@
         // Product filters and dynamic rendering (data from backend /api/products)
         let products = [];
         const productGrid = document.getElementById('productGrid');
-        const searchInput = document.getElementById('productSearch');
-        const sortBy = document.getElementById('sortBy');
 
         function renderProducts(list) {
             productGrid.innerHTML = '';
@@ -495,14 +485,8 @@
         }
 
         function updateProductList() {
-            let filtered = products.filter(p => p.name.toLowerCase().includes(searchInput.value.trim().toLowerCase()));
-            if (sortBy.value === 'name_asc') filtered.sort((a,b)=>a.name.localeCompare(b.name));
-            if (sortBy.value === 'name_desc') filtered.sort((a,b)=>b.name.localeCompare(a.name));
-            renderProducts(filtered);
+            renderProducts(products);
         }
-
-        searchInput.addEventListener('input', updateProductList);
-        sortBy.addEventListener('change', updateProductList);
 
         async function loadProducts() {
             try {
