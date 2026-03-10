@@ -461,22 +461,18 @@
             }
         });
 
-        // Product filters and dynamic rendering
-        const products = [
-            {id:1,name:'Cutting Tools',description:'High-quality cutting tools for precision machining.',image:'CUTTING TOOLS.jpg'},
-            {id:2,name:'Taps',description:'Precision taps for internal threading operations.',image:'TAPS.jpeg'},
-            {id:3,name:'Thread Mill',description:'Efficient thread mills for CNC machines.',image:'THREAD MILL.jpg'},
-            {id:4,name:'Thread Insert',description:'Durable thread inserts for heavy-duty applications.',image:'THREAD INSERT.jpg'},
-            {id:5,name:'Inserts for CNC VMC HMC GPM & SPM',description:'Highly reliable CNC inserts for multi-axis machining.',image:'INSERT FOR CNC.jpg'},
-            {id:6,name:'End Mill Drills & Form Cutters',description:'Versatile end mills and drills for precise cuts.',image:'END MILL.jpg'}
-        ];
-
+        // Product filters and dynamic rendering (data from backend /api/products)
+        let products = [];
         const productGrid = document.getElementById('productGrid');
         const searchInput = document.getElementById('productSearch');
         const sortBy = document.getElementById('sortBy');
 
         function renderProducts(list) {
             productGrid.innerHTML = '';
+            if (list.length === 0) {
+                productGrid.innerHTML = '<p style="color:#ddd; text-align:center; grid-column:1/-1;">No products found for current filters.</p>';
+                return;
+            }
             list.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
@@ -484,7 +480,7 @@
                     <img src="${item.image}" alt="${item.name}" class="product-image">
                     <div class="product-content">
                         <h3>${item.name}</h3>
-                        <p>${item.description}</p>
+                        <p>${item.description || 'Premium tooling solution for industrial application.'}</p>
                         <div class="materials">
                             <span class="material">Solid Carbide</span>
                             <span class="material">HSS</span>
@@ -497,16 +493,43 @@
         }
 
         function updateProductList() {
-            let filtered = products.filter(p => p.name.toLowerCase().includes(searchInput.value.trim().toLowerCase()));
-            if (sortBy.value === 'name_asc') filtered.sort((a,b)=>a.name.localeCompare(b.name));
-            if (sortBy.value === 'name_desc') filtered.sort((a,b)=>b.name.localeCompare(a.name));
+            let filtered = products.filter(p => p.category.toLowerCase().includes(searchInput.value.trim().toLowerCase()));
+            if (sortBy.value === 'name_asc') filtered.sort((a,b)=>a.category.localeCompare(b.category));
+            if (sortBy.value === 'name_desc') filtered.sort((a,b)=>b.category.localeCompare(a.category));
             renderProducts(filtered);
         }
 
         searchInput.addEventListener('input', updateProductList);
         sortBy.addEventListener('change', updateProductList);
 
-        renderProducts(products);
+        async function loadProducts() {
+            try {
+                const response = await fetch('/api/products');
+                const data = await response.json();
+                if (response.ok && data.success) {
+                    products = data.data.map(item => ({
+                        category: item.category,
+                        description: item.description || 'Premium tooling solution for industrial application.',
+                        image: item.image
+                    }));
+                } else {
+                    throw new Error(data.error || 'Failed to load products');
+                }
+            } catch (error) {
+                console.error('Failed to load products, using fallback list.', error);
+                products = [
+                    { category: 'Cutting Tools', description:'High-quality cutting tools for precision machining.', image:'CUTTING TOOLS.jpg' },
+                    { category: 'Taps', description:'Precision taps for internal threading operations.', image:'TAPS.jpeg' },
+                    { category: 'Thread Mill', description:'Efficient thread mills for CNC machines.', image:'THREAD MILL.jpg' },
+                    { category: 'Thread Insert', description:'Durable thread inserts for heavy-duty applications.', image:'THREAD INSERT.jpg' },
+                    { category: 'Inserts for CNC VMC HMC GPM & SPM', description:'Highly reliable CNC inserts for multi-axis machining.', image:'INSERT FOR CNC.jpg' },
+                    { category: 'End Mill Drills & Form Cutters', description:'Versatile end mills and drills for precise cuts.', image:'END MILL.jpg' }
+                ];
+            }
+            updateProductList();
+        }
+
+        loadProducts();
 
         // Quote form submission
         const quoteForm = document.getElementById('quoteForm');
