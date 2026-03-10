@@ -1,0 +1,63 @@
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const fs = require('fs');
+const path = require('path');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+app.use(cors());
+app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname)));
+
+const products = [
+  { id: 1, category: 'Cutting Tools', image: 'CUTTING TOOLS.jpg', materials: ['Solid Carbide', 'HSS', 'Brazed'] },
+  { id: 2, category: 'Taps', image: 'TAPS.jpeg', materials: ['Solid Carbide', 'HSS', 'Brazed'] },
+  { id: 3, category: 'Thread Mill', image: 'THREAD MILL.jpg', materials: ['Solid Carbide', 'HSS', 'Brazed'] },
+  { id: 4, category: 'Thread Insert', image: 'THREAD INSERT.jpg', materials: ['Solid Carbide', 'HSS', 'Brazed'] },
+  { id: 5, category: 'Inserts for CNC VMC HMC GPM & SPM', image: 'INSERT FOR CNC.jpg', materials: ['Solid Carbide', 'HSS', 'Brazed'] },
+  { id: 6, category: 'End Mill Drills & Form Cutters', image: 'END MILL.jpg', materials: ['Solid Carbide', 'HSS', 'Brazed'] }
+];
+
+app.get('/api/products', (req, res) => {
+  res.json({ success: true, data: products });
+});
+
+app.post('/api/contact', (req, res) => {
+  const { name, email, phone, message } = req.body;
+
+  if (!name || !email || !phone || !message) {
+    return res.status(400).json({ success: false, error: 'All fields are required.' });
+  }
+
+  const entry = {
+    name,
+    email,
+    phone,
+    message,
+    createdAt: new Date().toISOString()
+  };
+
+  const filePath = path.join(__dirname, 'contact-requests.json');
+  let list = [];
+
+  try {
+    if (fs.existsSync(filePath)) {
+      const content = fs.readFileSync(filePath, 'utf8');
+      list = JSON.parse(content || '[]');
+    }
+    list.push(entry);
+    fs.writeFileSync(filePath, JSON.stringify(list, null, 2));
+  } catch (error) {
+    console.error('Error writing contact request:', error);
+    return res.status(500).json({ success: false, error: 'Could not save request.' });
+  }
+
+  console.log('New contact request:', entry);
+  res.json({ success: true, message: 'Request received.' });
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
+});
