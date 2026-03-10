@@ -346,7 +346,7 @@
                 </div>
             </div>
             <div class="product-card">
-                <img src="TAPS.jpg" alt="Taps" class="product-image">
+                <img src="TAPS.jpeg" alt="Taps" class="product-image">
                 <div class="product-content">
                     <h3>Taps</h3>
                     <p>Precision taps for creating internal threads in metal workpieces, available in various sizes and types.</p>
@@ -408,6 +408,25 @@
         </div>
     </section>
 
+    <section id="why" class="about" style="margin-top: 1rem;">
+        <h2>Why Choose Global Tools</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <ul style="list-style: none; padding-left: 0; column-count: 2; column-gap: 2rem; font-size: 1.1rem;">
+                    <li>✅ High-precision tool geometry</li>
+                    <li>✅ ISO manufacturing standards</li>
+                    <li>✅ Fast lead time and reliable supply</li>
+                    <li>✅ 100+ CNC tooling products in stock</li>
+                    <li>✅ Industry-grade materials (Carbide, HSS, Brazed)</li>
+                    <li>✅ Technical support for machining parameters</li>
+                </ul>
+            </div>
+            <div class="about-image" style="background: url('https://source.unsplash.com/featured/?cnc-factory,engineering') center/cover;"></div>
+        </div>
+    </section>
+
+    <a href="#hero" id="backToTop" title="Back to Top" style="position: fixed; bottom: 20px; right: 20px; background: linear-gradient(45deg, #ff6b6b, #4ecdc4); color: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 8px 20px rgba(0,0,0,0.4); opacity: 0; pointer-events: none; transition: opacity 0.3s;">↑</a>
+
     <section id="contact" class="contact">
         <h2>Contact Us</h2>
         <div class="contact-info">
@@ -442,6 +461,17 @@
                     block: 'start'
                 });
             });
+        });
+
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                backToTop.style.opacity = '1';
+                backToTop.style.pointerEvents = 'auto';
+            } else {
+                backToTop.style.opacity = '0';
+                backToTop.style.pointerEvents = 'none';
+            }
         });
     </script>
 </body>
