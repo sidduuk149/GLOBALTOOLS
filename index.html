@@ -512,7 +512,7 @@
                         name: item.category,
                         category: item.category,
                         description: item.description || 'Premium tooling solution for industrial application.',
-                        image: item.image
+                        image: item.image ? '/' + item.image.trim() : '/placeholder.png'
                     }));
                 } else {
                     throw new Error(data.error || 'Failed to load products');
@@ -520,12 +520,12 @@
             } catch (error) {
                 console.error('Failed to load products, using fallback list.', error);
                 products = [
-                    { category: 'Cutting Tools', description:'High-quality cutting tools for precision machining.', image:'CUTTING TOOLS.jpg' },
-                    { category: 'Taps', description:'Precision taps for internal threading operations.', image:'TAPS.jpeg' },
-                    { category: 'Thread Mill', description:'Efficient thread mills for CNC machines.', image:'THREAD MILL.jpg' },
-                    { category: 'Thread Insert', description:'Durable thread inserts for heavy-duty applications.', image:'THREAD INSERT.jpg' },
-                    { category: 'Inserts for CNC VMC HMC GPM & SPM', description:'Highly reliable CNC inserts for multi-axis machining.', image:'INSERT FOR CNC.jpg' },
-                    { category: 'End Mill Drills & Form Cutters', description:'Versatile end mills and drills for precise cuts.', image:'END MILL.jpg' }
+                    { category: 'Cutting Tools', description:'High-quality cutting tools for precision machining.', image:'/CUTTING TOOLS.jpg' },
+                    { category: 'Taps', description:'Precision taps for internal threading operations.', image:'/TAPS.jpeg' },
+                    { category: 'Thread Mill', description:'Efficient thread mills for CNC machines.', image:'/THREAD MILL.jpg' },
+                    { category: 'Thread Insert', description:'Durable thread inserts for heavy-duty applications.', image:'/THREAD INSERT.jpg' },
+                    { category: 'Inserts for CNC VMC HMC GPM & SPM', description:'Highly reliable CNC inserts for multi-axis machining.', image:'/INSERT FOR CNC.jpg' },
+                    { category: 'End Mill Drills & Form Cutters', description:'Versatile end mills and drills for precise cuts.', image:'/END MILL.jpg' }
                 ];
             }
             updateProductList();
