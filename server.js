@@ -11,13 +11,29 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname)));
 
+// Custom endpoint for images with spaces in filenames
+app.get('/images/:imageName', (req, res) => {
+  const imageName = decodeURIComponent(req.params.imageName);
+  const imagePath = path.join(__dirname, imageName);
+
+  if (!imagePath.startsWith(path.join(__dirname, ''))) {
+    return res.status(403).send('Forbidden');
+  }
+
+  if (!fs.existsSync(imagePath)) {
+    return res.status(404).send('Image not found');
+  }
+
+  res.sendFile(imagePath);
+});
+
 const products = [
-  { id: 1, category: 'Cutting Tools', image: 'CUTTING TOOLS.jpg', materials: ['Solid Carbide', 'HSS', 'Brazed'] },
-  { id: 2, category: 'Taps', image: 'TAPS.jpeg', materials: ['Solid Carbide', 'HSS', 'Brazed'] },
-  { id: 3, category: 'Thread Mill', image: 'THREAD MILL.jpg', materials: ['Solid Carbide', 'HSS', 'Brazed'] },
-  { id: 4, category: 'Thread Insert', image: 'THREAD INSERT.jpg', materials: ['Solid Carbide', 'HSS', 'Brazed'] },
-  { id: 5, category: 'Inserts for CNC VMC HMC GPM & SPM', image: 'INSERT FOR CNC.jpg', materials: ['Solid Carbide', 'HSS', 'Brazed'] },
-  { id: 6, category: 'End Mill Drills & Form Cutters', image: 'END MILL.jpg', materials: ['Solid Carbide', 'HSS', 'Brazed'] }
+  { id: 1, category: 'Cutting Tools', image: '/images/CUTTING%20TOOLS.jpg', materials: ['Solid Carbide', 'HSS', 'Brazed'] },
+  { id: 2, category: 'Taps', image: '/images/TAPS.jpeg', materials: ['Solid Carbide', 'HSS', 'Brazed'] },
+  { id: 3, category: 'Thread Mill', image: '/images/THREAD%20MILL.jpg', materials: ['Solid Carbide', 'HSS', 'Brazed'] },
+  { id: 4, category: 'Thread Insert', image: '/images/THREAD%20INSERT.jpg', materials: ['Solid Carbide', 'HSS', 'Brazed'] },
+  { id: 5, category: 'Inserts for CNC VMC HMC GPM & SPM', image: '/images/INSERT%20FOR%20CNC.jpg', materials: ['Solid Carbide', 'HSS', 'Brazed'] },
+  { id: 6, category: 'End Mill Drills & Form Cutters', image: '/images/END%20MILL.jpg', materials: ['Solid Carbide', 'HSS', 'Brazed'] }
 ];
 
 app.get('/api/products', (req, res) => {

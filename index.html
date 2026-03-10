@@ -467,7 +467,7 @@
                 const card = document.createElement('div');
                 card.className = 'product-card';
                 const rawImage = item.image ? item.image.trim() : '';
-                const imagePath = rawImage ? '/' + encodeURI(rawImage) : 'https://via.placeholder.com/400x200?text=No+Image';
+                const imagePath = rawImage ? rawImage : 'https://via.placeholder.com/400x200?text=No+Image';
                 card.innerHTML = `
                     <img src="${imagePath}" alt="${item.name || item.category}" class="product-image">
                     <div class="product-content">
@@ -497,7 +497,7 @@
                         name: item.category,
                         category: item.category,
                         description: item.description || 'Premium tooling solution for industrial application.',
-                        image: item.image ? '/' + item.image.trim() : '/placeholder.png'
+                        image: item.image ? item.image.trim() : '/placeholder.png'
                     }));
                 } else {
                     throw new Error(data.error || 'Failed to load products');
