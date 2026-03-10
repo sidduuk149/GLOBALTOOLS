@@ -476,9 +476,10 @@
             list.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
-                const imageUrl = item.image ? encodeURI(item.image.trim()) : 'https://via.placeholder.com/400x200?text=No+Image';
+                const rawImage = item.image ? item.image.trim() : '';
+                const imagePath = rawImage ? '/' + encodeURI(rawImage) : 'https://via.placeholder.com/400x200?text=No+Image';
                 card.innerHTML = `
-                    <img src="${imageUrl}" alt="${item.name || item.category}" class="product-image">
+                    <img src="${imagePath}" alt="${item.name || item.category}" class="product-image">
                     <div class="product-content">
                         <h3>${item.name || item.category}</h3>
                         <p>${item.description || 'Premium tooling solution for industrial application.'}</p>
